@@ -1,0 +1,128 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# macOS network and removable-volume metadata
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Environment variables and local configuration
+.env
+.env.*
+!.env.example
+*.local
+
+# Secrets and credentials
+*.key
+*.pem
+*.p12
+*.pfx
+credentials.json
+secrets.*
+
+# Editor and IDE settings
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+*~
+*.swp
+*.swo
+
+# Logs and runtime files
+*.log
+logs/
+*.pid
+*.pid.lock
+*.seed
+
+# Temporary files and caches
+.cache/
+.tmp/
+temp/
+tmp/
+*.tmp
+*.temp
+*.bak
+*.orig
+
+# Build and generated output
+build/
+dist/
+out/
+target/
+coverage/
+htmlcov/
+*.generated.*
+
+# Archives and packaged artifacts
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+*.rar
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.venv/
+venv/
+
+# Node.js and JavaScript
+node_modules/
+.npm/
+.yarn/cache/
+.pnpm-store/
+.next/
+.nuxt/
+.svelte-kit/
+
+# C and C++
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+*.dSYM/
+
+# Rust
+target/
+
+# Java, Kotlin, and Gradle
+.gradle/
+*.class
+*.jar
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+
+# Local tool output
+.DS_Store
