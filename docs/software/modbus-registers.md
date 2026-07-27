@@ -1,4 +1,4 @@
-# Veris H8163-CB Modbus Registers
+# Veris H8163-CB Modbus register map
 
 Register reference for the Veris H8163-CB Modbus Communication Board for the H81xx/H8163 energy meter.
 

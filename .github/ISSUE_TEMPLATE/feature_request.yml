@@ -1,0 +1,20 @@
+name: Feature request
+description: Suggest an improvement to the project.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: Need
+      description: What problem would this change solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the desired behavior and any relevant hardware.
+    validations:
+      required: true

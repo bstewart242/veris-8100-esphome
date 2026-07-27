@@ -1,134 +1,90 @@
 # Veris 8100 ESPHome
 
-ESPHome Modbus integration, validated register map, and Home Assistant configuration for Veris 8100 Series Energy Meters.
+An ESPHome-to-Modbus interface for Veris 8100 Series energy meters, built with a
+Seeed Studio XIAO ESP32-C3 and its RS-485 expansion board.
 
----
+The project exposes energy, power, voltage, current, power-factor, and demand
+measurements to Home Assistant.
 
-## Supported Hardware
+## Hardware
 
-### Veris H8167 Energy Meter
+| Component | Project documentation | Manufacturer |
+|---|---|---|
+| Veris H8167 Energy Meter | [Hardware notes](docs/hardware/veris-h8167.md) | [Veris H81xx Series](https://www.veris.com/) |
+| Veris H8163-CB Modbus Communications Board | [Configuration and wiring](docs/hardware/veris-h8163-cb.md) | [Veris Industries](https://www.veris.com/) |
+| Seeed Studio XIAO ESP32-C3 | [Pin assignments](docs/hardware/seeed-xiao-esp32-c3.md) | [Product page](https://www.seeedstudio.com/Seeed-XIAO-ESP32C3-p-5431.html) |
+| XIAO RS-485 Expansion Board | [Wiring notes](docs/hardware/seeed-xiao-rs485-expansion.md) | [Product page](https://www.seeedstudio.com/RS485-Breakout-Board-for-XIAO-p-5724.html) |
 
-- H8167-xxxx-xx Series Energy Meter
+The downloaded manufacturer manuals, schematics, and project photos are indexed
+in [the hardware documentation](docs/hardware/README.md).
 
-### Veris H8163-CB Modbus Communications Board
+## Quick start
 
-#### Address DIP Switch
+1. Install the XIAO ESP32-C3 on the RS-485 expansion board.
+2. Configure the H8163-CB for 2-wire RS-485, 9600 baud, no parity, and a unique
+   Modbus address. The default configuration expects address `1`.
+3. With power disconnected, connect the H8163-CB `TX+/RX+` terminal to RS-485
+   `A` and `TX-/RX-` to `B`. Follow the manufacturer manual and local electrical
+   codes.
+4. Copy `secrets.example.yaml` to `secrets.yaml` and enter your Wi-Fi and
+   ESPHome credentials.
+5. Validate and install [`veris-8100.yaml`](veris-8100.yaml) with ESPHome.
+6. Confirm sensible readings before relying on the data. If every float is
+   invalid or implausible, see the word-order note in
+   [the software documentation](docs/software/README.md).
 
-> _Documentation coming soon._
-
-#### Communication Settings DIP Switch
-
-> _Documentation coming soon._
-
-#### Wiring
-
-##### Power Tap
-
-> _Documentation coming soon._
-
-##### RS-485 Terminal Block
-
-> _Documentation coming soon._
-
----
-
-## Home Assistant
-
-### Exposed Entities
-
-The following sensor entities are exposed to Home Assistant.
-
-### Energy
-
-| Entity | Units | Description |
-|---------|:-----:|-------------|
-| Total Energy | kWh | Total accumulated real energy consumption |
-| Total Real Power | kW | Total real (active) power |
-| Total Reactive Power | kVAR | Total reactive power |
-| Total Apparent Power | kVA | Total apparent power |
-| Total Power Factor | — | Overall system power factor |
-
-### Average Measurements
-
-| Entity | Units | Description |
-|---------|:-----:|-------------|
-| Average Line Voltage | V | Average line-to-line voltage |
-| Average Phase Voltage | V | Average line-to-neutral voltage |
-| Average Current | A | Average current across all phases |
-
-### Phase Voltages
-
-| Entity | Units | Description |
-|---------|:-----:|-------------|
-| Phase A Voltage | V | L1 to Neutral |
-| Phase B Voltage | V | L2 to Neutral |
-| Phase C Voltage | V | L3 to Neutral |
-| Phase A-B Voltage | V | L1 to L2 |
-| Phase B-C Voltage | V | L2 to L3 |
-| Phase A-C Voltage | V | L1 to L3 |
-
-### Phase Currents
-
-| Entity | Units | Description |
-|---------|:-----:|-------------|
-| Phase A Current | A | Current on Phase A (L1) |
-| Phase B Current | A | Current on Phase B (L2) |
-| Phase C Current | A | Current on Phase C (L3) |
-
-### Phase Real Power
-
-| Entity | Units | Description |
-|---------|:-----:|-------------|
-| Phase A Real Power | kW | Real power on Phase A |
-| Phase B Real Power | kW | Real power on Phase B |
-| Phase C Real Power | kW | Real power on Phase C |
-
-### Phase Power Factor
-
-| Entity | Units | Description |
-|---------|:-----:|-------------|
-| Phase A Power Factor | — | Power factor for Phase A |
-| Phase B Power Factor | — | Power factor for Phase B |
-| Phase C Power Factor | — | Power factor for Phase C |
-
-### Demand
-
-| Entity | Units | Description |
-|---------|:-----:|-------------|
-| Present Demand Sub-Interval | kW | Current sub-interval demand |
-| Present Demand | kW | Current demand |
-| Peak Demand | kW | Peak demand since last reset |
-| Present Reactive Demand | kVAR | Current reactive demand |
-| Peak Reactive Demand | kVAR | Peak reactive demand |
-
----
-
-## Notes
-
-- Supports both **single-phase/split-phase** and **three-phase** installations.
-- On split-phase systems, **Phase C** entities will typically report zero or remain unused.
-- Entity names use standard electrical terminology rather than vendor-specific names.
-- Measurements are read directly from the Veris 8100 Series meter over **Modbus RTU (RS-485)**.
-
----
-
-## ESPHome Configuration
-
-The reference ESPHome configuration is located at:
+## Repository layout
 
 ```text
-/src/esphome_esp32c3plus.yaml
+.
+├── .github/                 GitHub issue and pull-request templates
+├── config/                  Optional supporting configuration
+├── docs/
+│   ├── hardware/            Component notes and manufacturer manuals
+│   └── software/            ESPHome and Modbus documentation
+├── hardware/
+│   └── mounting-bracket/    CAD sources, exports, and drawings
+├── images/                  Project photos and diagrams
+├── src/                     Future custom source components
+├── veris-8100.yaml          Main ESPHome configuration
+└── secrets.example.yaml     Safe credential template
 ```
 
----
+Empty folders are retained with `.gitkeep` files because Git tracks files, not
+directories.
 
-## Project Roadmap
+## Exposed measurements
 
-- [ ] Complete register validation
-- [ ] Wiring guide with photos
-- [ ] Power tap installation
-- [ ] 3D printed mounting bracket
-- [ ] Home Assistant Energy Dashboard configuration
-- [ ] ESPHome package support
-- [ ] Hardware BOM
-- [ ] Installation guide
+The reference configuration exposes:
+
+- Total energy, real power, reactive power, apparent power, and power factor
+- Average line voltage, phase voltage, and current
+- Per-phase voltage, current, real power, and power factor
+- Present, peak, and reactive demand
+
+Some phase values are unavailable on single- or split-phase meter variants. See
+the [validated register map](docs/software/modbus-registers.md) for model-specific
+details.
+
+## Documentation
+
+- [Documentation index](docs/README.md)
+- [Hardware documentation](docs/hardware/README.md)
+- [Software and configuration notes](docs/software/README.md)
+- [Modbus register map](docs/software/modbus-registers.md)
+- [Mounting-bracket workspace](hardware/mounting-bracket/README.md)
+
+## Status
+
+This is a field project, not a manufacturer-supported integration. The register
+map has been transcribed from the Veris documentation, but the completed build
+should be tested against a known meter before deployment.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). Changes are recorded in
+[CHANGELOG.md](CHANGELOG.md).
+
+## License
+
+Licensed under the [MIT License](LICENSE.md).

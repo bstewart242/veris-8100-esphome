@@ -32,6 +32,7 @@ Temporary Items
 *.pfx
 credentials.json
 secrets.*
+!secrets.example.yaml
 
 # Editor and IDE settings
 .vscode/*
@@ -70,6 +71,7 @@ target/
 coverage/
 htmlcov/
 *.generated.*
+.esphome/
 
 # Archives and packaged artifacts
 *.zip
@@ -122,7 +124,7 @@ target/
 .terraform/
 *.tfstate
 *.tfstate.*
-.terraform.lock.hcl
 
-# Local tool output
-.DS_Store
+# CAD and slicer output
+*.gcode
+*.3mf.tmp

@@ -1,0 +1,355 @@
+substitutions:
+  device_name: veris-8100
+  friendly_name: Veris 8100 Energy Meter
+  modbus_address: "1"
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+
+esp32:
+  board: seeed_xiao_esp32c3
+  framework:
+    type: esp-idf
+
+logger:
+
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  ap:
+    ssid: "${friendly_name} Setup"
+    password: !secret ota_password
+
+captive_portal:
+
+uart:
+  id: meter_uart
+  tx_pin: GPIO6
+  rx_pin: GPIO7
+  flow_control_pin: GPIO4
+  baud_rate: 9600
+  parity: NONE
+  stop_bits: 1
+
+modbus:
+  id: meter_modbus
+  uart_id: meter_uart
+  send_wait_time: 250ms
+
+modbus_controller:
+  - id: veris_meter
+    address: ${modbus_address}
+    modbus_id: meter_modbus
+    setup_priority: -10
+    update_interval: 30s
+
+sensor:
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Total Energy
+    address: 257
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: kWh
+    device_class: energy
+    state_class: total_increasing
+    accuracy_decimals: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Total Real Power
+    address: 261
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: kW
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Total Reactive Power
+    address: 263
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: kVAr
+    state_class: measurement
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Total Apparent Power
+    address: 265
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: kVA
+    state_class: measurement
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Total Power Factor
+    address: 267
+    register_type: holding
+    value_type: FP32
+    device_class: power_factor
+    state_class: measurement
+    accuracy_decimals: 3
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Average Line Voltage
+    address: 269
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: V
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Average Phase Voltage
+    address: 271
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: V
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Average Current
+    address: 273
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: A
+    device_class: current
+    state_class: measurement
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Phase A Real Power
+    address: 275
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: kW
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Phase B Real Power
+    address: 277
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: kW
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Phase C Real Power
+    address: 279
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: kW
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Phase A Power Factor
+    address: 281
+    register_type: holding
+    value_type: FP32
+    device_class: power_factor
+    state_class: measurement
+    accuracy_decimals: 3
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Phase B Power Factor
+    address: 283
+    register_type: holding
+    value_type: FP32
+    device_class: power_factor
+    state_class: measurement
+    accuracy_decimals: 3
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Phase C Power Factor
+    address: 285
+    register_type: holding
+    value_type: FP32
+    device_class: power_factor
+    state_class: measurement
+    accuracy_decimals: 3
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Phase A-B Voltage
+    address: 287
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: V
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Phase B-C Voltage
+    address: 289
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: V
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Phase A-C Voltage
+    address: 291
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: V
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Phase A Voltage
+    address: 293
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: V
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Phase B Voltage
+    address: 295
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: V
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Phase C Voltage
+    address: 297
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: V
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Phase A Current
+    address: 299
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: A
+    device_class: current
+    state_class: measurement
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Phase B Current
+    address: 301
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: A
+    device_class: current
+    state_class: measurement
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Phase C Current
+    address: 303
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: A
+    device_class: current
+    state_class: measurement
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Present Demand Sub-Interval
+    address: 305
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: kW
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Present Demand
+    address: 307
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: kW
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Peak Demand
+    address: 309
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: kW
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Present Reactive Demand
+    address: 313
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: kVAr
+    state_class: measurement
+    accuracy_decimals: 2
+
+  - platform: modbus_controller
+    modbus_controller_id: veris_meter
+    name: Peak Reactive Demand
+    address: 315
+    register_type: holding
+    value_type: FP32
+    unit_of_measurement: kVAr
+    state_class: measurement
+    accuracy_decimals: 2

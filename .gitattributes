@@ -1,2 +1,14 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Binary documentation and design files
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.step binary
+*.stp binary
+*.stl binary
+*.3mf binary
+*.f3d binary
+*.fcstd binary
