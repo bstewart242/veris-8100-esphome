@@ -1,7 +1,7 @@
 # Software documentation
 
 The main ESPHome configuration is
-[`../../veris-8100.yaml`](../../veris-8100.yaml). The complete meter reference is
+[`../../veris-8100.yaml`](config/veris-8100.yaml). The complete meter reference is
 in the [Modbus register map](modbus-registers.md).
 
 ## Configuration
