@@ -12,7 +12,7 @@ matching RS-485 expansion board.
 | UART receive | D5 | GPIO7 |
 
 These assignments match Seeed Studio's RS-485 example for the XIAO ESP32-C3.
-They are defined in [`config//veris-8100.yaml`](/config/veris-8100.yaml).
+They are defined in [`config/veris-8100.yaml`](/config/veris-8100.yaml).
 
 ## References
 

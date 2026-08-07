@@ -20,7 +20,7 @@ in [the hardware documentation](docs/hardware/README.md).
 
 ## Software
 - HomeAssistant
-- ESPHome Builder HomeAssistant Plugin
+- ESPHome Builder Plugin
 
 ## Quick start
 
@@ -64,6 +64,9 @@ The reference configuration exposes:
 Some phase values are unavailable on single- or split-phase meter variants. See
 the [validated register map](docs/software/modbus-registers.md) for model-specific
 details.
+
+![Home Assistant Exposed Measurements](images/Home%20Assistant%20Exposed%20Entities.jpg)
+
 
 ## Documentation
 
