@@ -16,7 +16,7 @@ The supplied ESPHome configuration expects:
 
 Set address DIP switches 1–6 to the desired address from 1 through 63, then set
 the same value in the `modbus_address` substitution in
-[`../../veris-8100.yaml`](../../veris-8100.yaml).
+[`config/veris-8100.yaml`](/config/veris-8100.yaml).
 
 For the communication-settings DIP bank, the reference setup is:
 
