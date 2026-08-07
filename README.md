@@ -18,6 +18,10 @@ measurements to Home Assistant.
 The downloaded manufacturer manuals, schematics, and project photos are indexed
 in [the hardware documentation](docs/hardware/README.md).
 
+## Software
+- HomeAssistant
+- ESPHome Builder HomeAssistant Plugin
+
 ## Quick start
 
 1. Install the XIAO ESP32-C3 on the RS-485 expansion board.
@@ -26,19 +30,17 @@ in [the hardware documentation](docs/hardware/README.md).
 3. With power disconnected, connect the H8163-CB `TX+/RX+` terminal to RS-485
    `A` and `TX-/RX-` to `B`. Follow the manufacturer manual and local electrical
    codes.
-4. Copy `secrets.example.yaml` to `secrets.yaml` and enter your Wi-Fi and
+4. Copy `config/secrets.example.yaml` to `secrets.yaml` and enter your Wi-Fi and
    ESPHome credentials.
-5. Validate and install [`veris-8100.yaml`](veris-8100.yaml) with ESPHome.
-6. Confirm sensible readings before relying on the data. If every float is
-   invalid or implausible, see the word-order note in
-   [the software documentation](docs/software/README.md).
+5. Validate and install [`veris-8100.yaml`](config/veris-8100.yaml) with ESPHome.
+6. Validate readings before relying on the data. 
 
 ## Repository layout
 
 ```text
 .
 ├── .github/                 GitHub issue and pull-request templates
-├── config/                  Optional supporting configuration
+├── config/                  Configuration files
 ├── docs/
 │   ├── hardware/            Component notes and manufacturer manuals
 │   └── software/            ESPHome and Modbus documentation
@@ -49,9 +51,6 @@ in [the hardware documentation](docs/hardware/README.md).
 ├── veris-8100.yaml          Main ESPHome configuration
 └── secrets.example.yaml     Safe credential template
 ```
-
-Empty folders are retained with `.gitkeep` files because Git tracks files, not
-directories.
 
 ## Exposed measurements
 
@@ -80,10 +79,9 @@ This is a field project, not a manufacturer-supported integration. The register
 map has been transcribed from the Veris documentation, but the completed build
 should be tested against a known meter before deployment.
 
-## Contributing
+## Changelog
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Changes are recorded in
-[CHANGELOG.md](CHANGELOG.md).
+Changes are recorded in [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 
